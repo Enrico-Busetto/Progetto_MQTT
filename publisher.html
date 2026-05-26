@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-        <script src="publisher.js"></script>
-    </head>
+<html lang="it">
 
-    <body>
-        <main>
-            <h2 class="titolo">Client A: Publisher</h2>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" defer></script>
+    <script src="publisher.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
 
-            <div>
-                <input type="text" id="topic" placeholder="Topic">
+<body>
+    <main class="container">
+        <h2 class="titolo">Client A: Publisher</h2>
+        <input type="text" id="topic" placeholder="Topic">
+        <input type="text" id="msg" placeholder="Messaggio">
+        <button id="btnPub">Pubblica</button>
+        <footer>Creato da Marco Roibu & Enrico Busetto</footer>
+    </main>
+</body>
 
-                <input type="text" id="msg" placeholder="Messaggio">
-
-                <button id="btnPub">Pubblica</button>
-            </div>
-            <footer>Creato da Marco Roibu & Enrico Busetto</footer>
-        </main>
-    </body>
 </html>
