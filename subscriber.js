@@ -1,7 +1,7 @@
 const client = mqtt.connect('ws://127.0.0.1:9001/mqtt');
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    client.on('connect', () => console.log("Subscriber connesso al Broker!"));
+    client.on('connect', (event) => console.log("Subscriber connesso al Broker!"));
 
     document.getElementById('btnSub').addEventListener('click', () => {
         const topic = document.getElementById('topicSub').value;
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         else{
             alert("Topic vuoto devi inserirlo!!!");
         }
-        
+
     });
 
     client.on('message', (topic, message) => {
@@ -20,4 +20,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
         div.innerHTML += `<p><b>${topic}:</b> ${message.toString()}</p>`;
         console.log(`Ricevuto su ${topic}: ${message.toString()}`);
     });
+    
 });

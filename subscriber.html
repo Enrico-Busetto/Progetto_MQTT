@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-<html>
-<body>
-    <h2>Client B: Subscriber</h2>
-    <input type="text" id="topicSub" placeholder="Topic da ascoltare">
-    <button id="btnSub">Iscriviti</button>
-    <div id="ricezione">
-        <p>Log ricezione:</p>
-    </div>
+<html lang="it">
+    
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" defer></script>
+        <script src="subscriber.js" defer></script>
+    </head>
 
-    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-    <script src="subscriber.js"></script>
-</body>
+    <body>
+        <main>
+            <h2 class="titolo">Client B: Subscriber</h2>
+        
+            <div>
+                <input type="text" id="topicSub" placeholder="Topic da ascoltare">
+                <button id="btnSub" >Iscriviti</button>
+            </div>
+        
+            <section id="ricezione">
+                <h3>Log ricezione:</h3>
+            </section>
 
+        </main>
+    </body>
 </html>

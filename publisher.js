@@ -12,15 +12,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 client.publish(topic, msg);
                 console.log(`Inviato: ${msg} su ${topic}`);
             }
-
-            else if(msg == "" && topic == ""){
-                alert("Topic vuoto e Messaggio vuoto !!!");
-            }
-            else if(topic ==""){
-                alert("Topic vuoto !!!");
-            }
             else{
-                alert("Messaggio vuoto !!!");
+                alert("Topic o Messaggio vuoti !!!");
             }
 
         } else {
