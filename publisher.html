@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html>
-<body>
-    <h2>Client A: Publisher</h2>
-    <input type="text" id="topic" placeholder="Topic">
-    <input type="text" id="msg" placeholder="Messaggio">
-    <button id="btnPub">Pubblica</button>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+        <script src="publisher.js"></script>
+    </head>
 
-    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-    <script src="publisher.js"></script>
-</body>
+    <body>
+        <main>
+            <h2 class="titolo">Client A: Publisher</h2>
+
+            <div>
+                <input type="text" id="topic" placeholder="Topic">
+
+                <input type="text" id="msg" placeholder="Messaggio">
+
+                <button id="btnPub">Pubblica</button>
+            </div>
+            
+        </main>
+    </body>
 </html>
