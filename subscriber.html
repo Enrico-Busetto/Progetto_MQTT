@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html lang="it">
-    
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" defer></script>
-        <script src="subscriber.js" defer></script>
-    </head>
 
-    <body>
-        <main>
-            <h2 class="titolo">Client B: Subscriber</h2>
-        
-            <div>
-                <input type="text" id="topicSub" placeholder="Topic da ascoltare">
-                <button id="btnSub" >Iscriviti</button>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" defer></script>
+    <script src="subscriber.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
 
-            <h3>Lista preparazione:</h3>
-            <section id="listaPrep"></section>
-            
-            <h3>Lista processi finiti:</h3>
-            <section id="listaFinito"></section>
-        </main>
+<body>
+    <main class="container">
+        <h2 class="titolo">Client B: Subscriber</h2>
+        <input type="text" id="topicSub" placeholder="Topic da ascoltare">
+        <button id="btnSub">Iscriviti</button>
+
+        <h3 class="section-title">Lista preparazione:</h3>
+        <div id="listaPrep"></div>
+
+        <h3 class="section-title">Lista processi finiti:</h3>
+        <div id="listaFinito"></div>
+
         <footer>Creato da Marco Roibu & Enrico Busetto</footer>
-    </body>
+    </main>
+</body>
+
 </html>
