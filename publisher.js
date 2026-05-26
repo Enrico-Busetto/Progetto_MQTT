@@ -1,19 +1,30 @@
-const client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt');
+const client = mqtt.connect('ws://127.0.0.1:9001/mqtt');
 
-// Usiamo una variabile di stato per sapere se siamo connessi
-let isConnected = false;
+document.addEventListener('DOMContentLoaded', (event) => {
+    client.on('connect', (event) => console.log("Publisher connesso al Broker!"));
 
-client.on('connect', () => {
-    console.log("Connessione stabilita con successo!");
-    isConnected = true;
-});
+    document.getElementById('btnPub').addEventListener('click', (event) => {
+        const topic = document.getElementById('topic').value;
+        const msg = document.getElementById('msg').value;
 
-document.getElementById('pubBtn').addEventListener('click', () => {
-    if (!isConnected) {
-        alert("Aspetta un secondo, il client si sta connettendo...");
-        return;
-    }
-    const topic = document.getElementById('topic').value;
-    const msg = document.getElementById('msg').value;
-    client.publish(topic, msg);
+        if (client.connected) {
+            if(topic != "" && msg !=""){
+                client.publish(topic, msg);
+                console.log(`Inviato: ${msg} su ${topic}`);
+            }
+
+            else if(msg == "" && topic == ""){
+                alert("Topic vuoto e Messaggio vuoto !!!");
+            }
+            else if(topic ==""){
+                alert("Topic vuoto !!!");
+            }
+            else{
+                alert("Messaggio vuoto !!!");
+            }
+
+        } else {
+            alert("Non sei ancora connesso al broker!");
+        }
+    });
 });

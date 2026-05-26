@@ -1,17 +1,23 @@
-const client = mqtt.connect('ws://broker.hivemq.com:8000/mqtt');
+const client = mqtt.connect('ws://127.0.0.1:9001/mqtt');
 
-client.on('connect', () => {
-    console.log("Connesso al broker, pronto per l'iscrizione.");
-});
+document.addEventListener('DOMContentLoaded', (event) => {
+    client.on('connect', () => console.log("Subscriber connesso al Broker!"));
 
-document.getElementById('subBtn').addEventListener('click', () => {
-    const topic = document.getElementById('subTopic').value;
-    
-    // Controlliamo se siamo connessi prima di iscriverci
-    if (client.connected) {
-        client.subscribe(topic);
-        console.log("Iscritto a: " + topic);
-    } else {
-        alert("Errore: non sei ancora connesso al broker.");
-    }
+    document.getElementById('btnSub').addEventListener('click', () => {
+        const topic = document.getElementById('topicSub').value;
+        if(topic != "") {
+            client.subscribe(topic);
+            console.log("Iscritto a:", topic);
+        }
+        else{
+            alert("Topic vuoto devi inserirlo!!!");
+        }
+        
+    });
+
+    client.on('message', (topic, message) => {
+        const div = document.getElementById('ricezione');
+        div.innerHTML += `<p><b>${topic}:</b> ${message.toString()}</p>`;
+        console.log(`Ricevuto su ${topic}: ${message.toString()}`);
+    });
 });

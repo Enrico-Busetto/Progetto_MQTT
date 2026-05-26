@@ -1,9 +1,15 @@
-<link rel="stylesheet" href="style.css">
-<div class="container">
-    <h3>Subscriber</h3>
-    <input type="text" id="subTopic" placeholder="Topic da seguire">
-    <button id="subBtn">Iscriviti</button>
-    <div id="logs"></div>
-</div>
-<script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
-<script src="scripts/subscriber.js"></script>
+<!DOCTYPE html>
+<html>
+<body>
+    <h2>Client B: Subscriber</h2>
+    <input type="text" id="topicSub" placeholder="Topic da ascoltare">
+    <button id="btnSub">Iscriviti</button>
+    <div id="ricezione">
+        <p>Log ricezione:</p>
+    </div>
+
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script src="subscriber.js"></script>
+</body>
+
+</html>
