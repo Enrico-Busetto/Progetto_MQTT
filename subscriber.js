@@ -1,5 +1,5 @@
 const client = mqtt.connect('ws://127.0.0.1:9001/mqtt');
-
+let tempo_random = Math.round(Math.random() * (10000 - 1000 + 1)) + 1000;
 let lista_prep = [];
 let lista_finito = [];
 
@@ -7,16 +7,15 @@ document.addEventListener('DOMContentLoaded', (event) => {
     client.on('connect', (event) => console.log("Subscriber connesso al Broker!"));
 
 
-    setInterval(() => operazioneFinita(),7000);
+    setInterval(() => operazioneFinita(), tempo_random);
     
     function operazioneFinita(){
         if(lista_prep.length > 0){
             console.log("Sono entrato");
             lista_finito.push(lista_prep.shift());
-            console.log(lista_prep);
-            console.log(lista_finito);
             caricaListaFinito();
             caricaListaPrep();
+            tempo_random = Math.round(Math.random() * (10000 - 1000 + 1)) + 1000;    
         }
     }
 
