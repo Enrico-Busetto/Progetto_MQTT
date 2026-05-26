@@ -1,66 +1,45 @@
 const client = mqtt.connect('ws://127.0.0.1:9001/mqtt');
-let tempo_random = Math.round(Math.random() * (10000 - 1000 + 1)) + 1000;
+
 let lista_prep = [];
 let lista_finito = [];
 
-document.addEventListener('DOMContentLoaded', (event) => {
-    client.on('connect', (event) => console.log("Subscriber connesso al Broker!"));
+document.addEventListener('DOMContentLoaded', () => {
+    client.on('connect', () => console.log("Subscriber connesso al Broker!"));
 
-
-    setInterval(() => operazioneFinita(), tempo_random);
-    
-    function operazioneFinita(){
-        if(lista_prep.length > 0){
-            console.log("Sono entrato");
+    // Gestione processi
+    setInterval(() => {
+        if(lista_prep.length > 0) {
             lista_finito.push(lista_prep.shift());
-            caricaListaFinito();
-            caricaListaPrep();
-            tempo_random = Math.round(Math.random() * (10000 - 1000 + 1)) + 1000;    
+            renderLists();
         }
-    }
+    }, 7000);
 
-    document.getElementById('btnSub').addEventListener('click', (event) => {
+    // Gestione Iscrizione
+    document.getElementById('btnSub').addEventListener('click', () => {
         const topic = document.getElementById('topicSub').value;
-        if(topic != "") {
+        if(topic) {
             client.subscribe(topic);
             console.log("Iscritto a:", topic);
+        } else {
+            alert("Inserisci un topic!");
         }
-        else{
-            alert("Topic vuoto devi inserirlo!!!");
-        }
-
     });
 
+    // Ricezione Messaggi
     client.on('message', (topic, message) => {
-        const nuovoElemento = {
-            topic: topic,
-            message: message.toString()
-        };
-
-        lista_prep.push(nuovoElemento);
-        caricaListaPrep();
+        lista_prep.push({ topic, message: message.toString() });
+        renderLists();
     });
 });
 
-function caricaListaPrep(){
-    const sezione = document.getElementById("listaPrep");
-    sezione.innerHTML = "";
-    let contenutoTemporaneo = "";
+// Funzione unificata per aggiornare la UI
+function renderLists() {
+    const sectionPrep = document.getElementById("listaPrep");
+    const sectionFinito = document.getElementById("listaFinito");
 
-    for (let i = 0; i < lista_prep.length; i++) {
-        contenutoTemporaneo += `<p><b>${lista_prep[i].topic}:</b> ${lista_prep[i].message}</p>`;
-    }
-
-    sezione.innerHTML += contenutoTemporaneo;     
-}
-
-function caricaListaFinito(){
-    const sezione = document.getElementById("listaFinito");
-    sezione.innerHTML = "";
-    let contenutoTemporaneo = "";
-
-    for (let i = 0; i < lista_finito.length; i++) {
-        contenutoTemporaneo += `<p><b>${lista_finito[i].topic}:</b> ${lista_finito[i].message}</p>`;
-    }
-    sezione.innerHTML += contenutoTemporaneo;
+    sectionPrep.innerHTML = lista_prep.map(item => 
+        `<p><b>${item.topic}:</b> ${item.message}</p>`).join('');
+    
+    sectionFinito.innerHTML = lista_finito.map(item => 
+        `<p><b>${item.topic}:</b> ${item.message}</p>`).join('');
 }
