@@ -2,17 +2,19 @@ const client = mqtt.connect('ws://127.0.0.1:9001/mqtt');
 
 let lista_prep = [];
 let lista_finito = [];
+let tempo_random = generaTempoRandomico();
 
 document.addEventListener('DOMContentLoaded', () => {
     client.on('connect', () => console.log("Subscriber connesso al Broker!"));
 
-    // Gestione processi
+    // Cambio dei procesi da una lista all altra
     setInterval(() => {
         if(lista_prep.length > 0) {
             lista_finito.push(lista_prep.shift());
             renderLists();
+            tempo_random = generaTempoRandomico();
         }
-    }, 7000);
+    },tempo_random);
 
     // Gestione Iscrizione
     document.getElementById('btnSub').addEventListener('click', () => {
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Funzione unificata per aggiornare la UI
+//Carica le 2 liste in preparazione e processo finito . 
 function renderLists() {
     const sectionPrep = document.getElementById("listaPrep");
     const sectionFinito = document.getElementById("listaFinito");
@@ -42,4 +44,8 @@ function renderLists() {
     
     sectionFinito.innerHTML = lista_finito.map(item => 
         `<p><b>${item.topic}:</b> ${item.message}</p>`).join('');
+}
+
+function generaTempoRandomico(){
+    return (Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000);
 }
