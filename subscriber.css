@@ -1,0 +1,68 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    background-color: #4A3728; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    font-family: 'Segoe UI', Tahoma, sans-serif; 
+}
+
+.container { 
+    background-color: #FDFBF7; 
+    width: 900px; 
+    height: 550px; 
+    display: grid; 
+    grid-template-columns: 1fr 2fr; 
+    grid-template-rows: 70px 1fr 60px; 
+    border: 6px solid #4A3728; 
+    overflow: hidden; 
+}
+
+/* Intestazioni */
+.header-prep { background-color: #4A3728; color: #FDFBF7; display: flex; align-items: center; padding-left: 20px; font-weight: bold; font-size: 1.5rem; }
+.header-collet { background-color: #2D4F31; color: #FDFBF7; display: flex; align-items: center; padding-left: 20px; font-weight: bold; font-size: 1.5rem; }
+
+/* Zone Ordini con Linea Divisoria */
+#listaPrep { 
+    padding: 20px; 
+    border-right: 4px solid #4A3728; 
+    overflow-y: auto; /* Scroll interno se troppi ordini */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#listaFinito { 
+    padding: 20px; 
+    display: grid; 
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px; 
+    align-content: start; 
+    overflow-y: auto;
+}
+
+/* Numeri Ordine */
+.ordine { 
+    font-size: 2.8rem; 
+    font-weight: 900; 
+    color: #2D4F31; 
+    text-align: center; 
+    padding: 10px;
+    background-color: #f1ede8;
+    border-radius: 8px;
+}
+
+/* Footer Fisso */
+.footer-tab { 
+    grid-column: span 2; 
+    background-color: #CC5500; 
+    color: #FDFBF7; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 1.2rem; 
+    font-weight: bold;
+    height: 60px;
+}

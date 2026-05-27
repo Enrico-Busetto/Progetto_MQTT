@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js" defer></script>
+    <link rel="stylesheet" href="publisher.css">
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="publisher.js" defer></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <main class="container">
-        <h2 class="titolo">Client A: Publisher</h2>
-        <input type="text" id="topic" placeholder="Topic">
-        <input type="text" id="msg" placeholder="Messaggio">
-        <button id="btnPub">Pubblica</button>
-        <footer>Creato da Marco Roibu & Enrico Busetto</footer>
+    <aside class="sidebar">
+        <button id="mostraMenu">MENÙ</button>
+        <button id="mostraPagamento">PAGA</button>
+    </aside>
+    <main id="area-principale">
+        <div id="contenuto"><h1>PUBBLICITÀ MCDONALD'S</h1></div>
     </main>
 </body>
-
 </html>

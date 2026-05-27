@@ -6,8 +6,10 @@ let tempo_random = generaTempoRandomico();
 
 document.addEventListener('DOMContentLoaded', () => {
     client.on('connect', () => console.log("Subscriber connesso al Broker!"));
+    client.subscribe("Ordini");
 
     // Cambio dei procesi da una lista all altra
+/*
     setInterval(() => {
         if(lista_prep.length > 0) {
             lista_finito.push(lista_prep.shift());
@@ -15,21 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
             tempo_random = generaTempoRandomico();
         }
     },tempo_random);
-
-    // Gestione Iscrizione
-    document.getElementById('btnSub').addEventListener('click', () => {
-        const topic = document.getElementById('topicSub').value;
-        if(topic) {
-            client.subscribe(topic);
-            console.log("Iscritto a:", topic);
-        } else {
-            alert("Inserisci un topic!");
-        }
-    });
+*/
 
     // Ricezione Messaggi
     client.on('message', (topic, message) => {
-        lista_prep.push({ topic, message: message.toString() });
+        const msg = JSON.parse(message.toString());
+        lista_prep.push(msg);
         renderLists();
     });
 });
@@ -39,11 +32,33 @@ function renderLists() {
     const sectionPrep = document.getElementById("listaPrep");
     const sectionFinito = document.getElementById("listaFinito");
 
-    sectionPrep.innerHTML = lista_prep.map(item => 
-        `<p><b>${item.topic}:</b> ${item.message}</p>`).join('');
+    let str_prep ="";
+    let str_finito = "";
     
-    sectionFinito.innerHTML = lista_finito.map(item => 
-        `<p><b>${item.topic}:</b> ${item.message}</p>`).join('');
+    for(let i=0; i<lista_prep.length; i++){
+        str_prep += `<div class="ordine-box">`;
+        str_prep += `<h3>Ordine numero: ${lista_prep[i].id}</h3>`;
+
+        if (lista_prep[i].prodotti && lista_prep[i].prodotti.length > 0) {
+            
+            str_prep += "<p>Prodotti: ";
+            for (let j = 0; j < lista_prep[i].prodotti.length; j++) {
+                str_prep += lista_prep[i].prodotti[j].nome;
+                
+                // Mette una virgola di separazione tranne che dopo l'ultimo elemento
+                if (j < lista_prep[i].prodotti.length - 1) {
+                    str_prep += ", ";
+                }
+            }
+            str_prep += "</p>";
+
+        } else {
+            str_prep += "<p>Nessun dettaglio prodotto trovato</p>";
+        }
+        str_prep += `</div>`;
+    }
+    
+    sectionPrep.innerHTML = str_prep;
 }
 
 function generaTempoRandomico(){

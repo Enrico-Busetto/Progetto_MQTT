@@ -1,0 +1,75 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    display: flex; 
+    height: 100vh; 
+    font-family: 'Segoe UI', Tahoma, sans-serif; 
+    background-color: #FDFBF7; 
+}
+
+/* Sidebar: Gestisce i due pulsanti principali */
+.sidebar { 
+    width: 300px; 
+    background-color: #4A3728; 
+    padding: 60px 20px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 40px; 
+    border-right: 5px solid #CC5500;
+}
+
+button { 
+    padding: 40px 20px; 
+    font-weight: bold; 
+    cursor: pointer; 
+    border: none; 
+    border-radius: 15px; 
+    background-color: #CC5500; 
+    color: #FDFBF7; 
+    font-size: 1.6rem; 
+    transition: 0.3s;
+}
+
+button:hover { background-color: #a04300; }
+
+/* Contenuto Dinamico */
+#area-principale { 
+    flex-grow: 1; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    color: #2D4F31; 
+}
+
+.voce-menu { 
+    background-color: #FDFBF7; 
+    border: 3px solid #4A3728; 
+    color: #2D4F31; 
+    padding: 30px; 
+    margin: 20px; 
+    border-radius: 15px; 
+    width: 350px; 
+    text-align: center; 
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Distanza tra nome menu e tasto */
+}
+
+.pulsante-aggiungi { 
+    background-color: #CC5500; 
+    color: #FDFBF7; 
+    padding: 20px; 
+    width: 100%; 
+    border-radius: 8px; 
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+}
+
+#area-pagamento { 
+    background-color: #FDFBF7; 
+    padding: 40px; 
+    border: 3px solid #4A3728; 
+    border-radius: 15px; 
+    text-align: center; 
+}
