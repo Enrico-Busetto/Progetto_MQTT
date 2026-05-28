@@ -36,9 +36,12 @@ button:hover { background-color: #a04300; }
 #area-principale { 
     flex-grow: 1; 
     display: flex; 
-    justify-content: center; 
-    align-items: center; 
+    flex-direction: column; /* Imposta in colonna */
+    align-items: center;    /* Centra orizzontalmente */
+    padding: 40px 0;        /* Spazio sopra e sotto */
     color: #2D4F31; 
+    overflow-y: auto;       /* Permette lo scroll se il contenuto è lungo */
+    height: 100vh;          /* Forza l'altezza al 100% della pagina */
 }
 
 .voce-menu { 
@@ -72,4 +75,12 @@ button:hover { background-color: #a04300; }
     border: 3px solid #4A3728; 
     border-radius: 15px; 
     text-align: center; 
+}
+#contenuto {
+    display: flex;
+    flex-wrap: wrap;        /* Permette agli elementi di andare a capo */
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;       /* Limita la larghezza massima */
+    padding: 20px;
 }
