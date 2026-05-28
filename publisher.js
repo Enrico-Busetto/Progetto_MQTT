@@ -36,10 +36,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const container = document.getElementById("contenuto");
 
         container.innerHTML = 
-        `<div class="voce-menu"><h3>Big Mac - 8€</h3><button class="pulsante-aggiungi" onclick="aggiungi('Big Mac', 8)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>McChicken - 7€</h3><button class="pulsante-aggiungi" onclick="aggiungi('McChicken', 7)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Menù Kids - 11€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Menù Kids', 11)">AGGIUNGI</button></div>`;
+        `<div class="voce-menu"><h3>Crunch - 9,50€</h3><button class="pulsante-aggiungi" onclick="aggiungi('Crunch', 9.50)">AGGIUNGI</button></div>
+        <div class="voce-menu"><h3>Golden - 10,50€</h3><button class="pulsante-aggiungi" onclick="aggiungi('Golden', 10.50)">AGGIUNGI</button></div>
+        <div class="voce-menu"><h3>Smash - 11,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Smash', 11.50)">AGGIUNGI</button></div>
+        <div class="voce-menu"><h3>Smoke - 12,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Smoke', 12.50)">AGGIUNGI</button></div>
+        <div class="voce-menu"><h3>Iconic - 13,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Iconic', 13.50)">AGGIUNGI</button></div>
+        <div class="voce-menu"><h3>Acqua(0,5L) - 1,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Acqua', 1.50)">AGGIUNGI</button></div>
+        <div class="voce-menu"><h3>Bibite in lattina - 3,00€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Bibite', 3.00)">AGGIUNGI</button></div>
+        <div class="voce-menu"><h3>Birra alla spina (0,3l) - 4,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Bibite',4.50)">AGGIUNGI</button></div>`;
     });
+
 
     
 
