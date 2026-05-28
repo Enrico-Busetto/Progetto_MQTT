@@ -84,3 +84,63 @@ button:hover { background-color: #a04300; }
     max-width: 900px;       /* Limita la larghezza massima */
     padding: 20px;
 }
+
+
+/* --- BOX CONTENITORE DEL CARRELLO (Isola la grafica dal menu) --- */
+.box-carrello {
+    background-color: #ffffff;
+    border: 3px solid #4A3728;
+    border-radius: 15px;
+    padding: 30px;
+    width: 100%;
+    max-width: 500px; /* Dimensione perfetta per uno scontrino centrato */
+    margin: 20px auto; /* Lo centra perfettamente nello schermo */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.box-carrello h3 {
+    color: #4A3728;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+/* I singoli elementi dentro il carrello */
+.item-carrello {
+    width: 100% !important;
+    font-size: 1.2rem;
+    color: #2D4F31;
+}
+
+/* Il totale del conto */
+.totale-carrello {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    color: #4A3728;
+    border-top: 2px solid #4A3728;
+    padding-top: 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* IL BOTTONE DI PAGAMENTO (Specifico e pulito) */
+.pulsante-paga {
+    background-color: #CC5500 !important;
+    color: #FDFBF7 !important;
+    padding: 20px !important;  /* Padding umano, non gigante */
+    font-size: 1.3rem !important;
+    font-weight: bold;
+    width: 100%;
+    border-radius: 10px !important;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.pulsante-paga:hover {
+    background-color: #a04300 !important;
+}
