@@ -4,9 +4,61 @@ let costo = 0;
 let matrix_id = Math.floor(Math.random() * 900) + 100;
 
 function aggiungi(nome, prezzo) {
-    ordine.push({ nome: nome, prezzo: prezzo });
+    let duplicato = false;
+    for(let i=0; i<ordine.length && !duplicato; i++){
+        if(ordine[i].nome == nome){
+            ordine[i].quantita++;
+            duplicato = true;
+        }
+    }
+    if(!duplicato){
+        ordine.push({ nome: nome, prezzo: prezzo, quantita: 1});
+    }
     costo += prezzo;
 }
+
+window.remove = function(indice){
+    ordine[indice].quantita--;
+    costo -= ordine[indice].prezzo;
+    if(ordine[indice].quantita == 0){
+        ordine.splice(indice,1);
+    }
+    caricaPaginaPagamento();
+} 
+
+window.caricaPaginaPagamento = function (){
+        const container = document.getElementById("contenuto");
+        let listaProdottiHTML = "";
+        
+        if (ordine.length === 0) {
+            listaProdottiHTML = "<p style='text-align:center; color:#777;'>Il tuo carrello è vuoto! Torna al menu.</p>";
+        } else {
+            for (let i = 0; i < ordine.length; i++) {
+                listaProdottiHTML += `
+                    <div class="item-carrello" style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 6px;">
+                        <span>X ${ordine[i].quantita}  ${ordine[i].nome}</span>
+                        <span>${ordine[i].prezzo}€</span>
+                    </div>`;
+                listaProdottiHTML += `<button class="btn_remover" onclick="remove(${i})">REMOVE</button>`
+            }
+        }
+
+        container.innerHTML = `
+            <div class="box-carrello">
+                <h3>Riepilogo dell'Ordine</h3>
+                
+                <div id="riepilogo-prodotti" style="margin-top: 15px;">
+                    ${listaProdottiHTML}
+                </div>
+                
+                <div class="totale-carrello">
+                    <span>Conto Totale:</span>
+                    <span><span id="prezzoTotale">${costo}</span>€</span>
+                </div>
+                
+                <button class="pulsante-paga" onclick="mandaPagamento()">Paga e Invia Ordine</button>
+            </div>`;
+    }
 
 window.mandaPagamento = function(){
     if (client.connected) {
@@ -52,36 +104,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     document.getElementById("mostraPagamento").addEventListener('click', (event) => {
         event.preventDefault();
-        const container = document.getElementById("contenuto");
-        let listaProdottiHTML = "";
+        caricaPaginaPagamento();
         
-        if (ordine.length === 0) {
-            listaProdottiHTML = "<p style='text-align:center; color:#777;'>Il tuo carrello è vuoto! Torna al menu.</p>";
-        } else {
-            for (let i = 0; i < ordine.length; i++) {
-                listaProdottiHTML += `
-                    <div class="item-carrello" style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 6px;">
-                        <span>${ordine[i].nome}</span>
-                        <span>${ordine[i].prezzo}€</span>
-                    </div>`;
-            }
-        }
-
-        container.innerHTML = `
-            <div class="box-carrello">
-                <h3>Riepilogo dell'Ordine</h3>
-                
-                <div id="riepilogo-prodotti" style="margin-top: 15px;">
-                    ${listaProdottiHTML}
-                </div>
-                
-                <div class="totale-carrello">
-                    <span>Conto Totale:</span>
-                    <span><span id="prezzoTotale">${costo}</span>€</span>
-                </div>
-                
-                <button class="pulsante-paga" onclick="mandaPagamento()">Paga e Invia Ordine</button>
-            </div>`;
-    });    
+    }); 
+    
     
 });

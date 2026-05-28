@@ -144,3 +144,19 @@ button:hover { background-color: #a04300; }
 .pulsante-paga:hover {
     background-color: #a04300 !important;
 }
+
+.btn_remover{
+    background: transparent;
+    color: #C0392B;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: 0.2s;
+}
+
+.btn_remover:hover {
+    color: #ffffff;
+    background-color: #C0392B;
+    border: 2px;
+}

@@ -8,9 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     client.on('connect', () => console.log("Subscriber connesso al Broker!"));
     client.subscribe("Ordini");
 
-    // Cambio dei procesi da una lista all altra
+    //Ricezione messaggi
     client.on('message', (topic, message) => {
-        // Ricezione Messaggi
+        const msg = JSON.parse(message.toString());
+        lista_prep.push(msg);
+        renderLists();
+
+        // Cambio dei procesi da una lista all altra
         setTimeout(() => {
         if(lista_prep.length > 0) {
             console.log(tempo_random);
@@ -20,9 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         },tempo_random);
 
-        const msg = JSON.parse(message.toString());
-        lista_prep.push(msg);
-        renderLists();
     });
 });
 
@@ -49,7 +50,9 @@ function creaContenuto(lista){
         
         str += "<p>Prodotti: ";
         for (let j = 0; j < lista[i].prodotti.length; j++) {
+            str += lista[i].prodotti[j].quantita+" X ";
             str += lista[i].prodotti[j].nome;
+
             if (j < lista[i].prodotti.length - 1) {
                 str += ", ";
             }
