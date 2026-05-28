@@ -21,13 +21,13 @@ body {
 }
 
 /* Intestazioni */
-.header-prep { background-color: #4A3728; color: #FDFBF7; display: flex; align-items: center; padding-left: 20px; font-weight: bold; font-size: 1.5rem; }
+.header-prep { background-color: #CC5500; color: #FDFBF7; display: flex; align-items: center; padding-left: 20px; font-weight: bold; font-size: 1.5rem; }
 .header-collet { background-color: #2D4F31; color: #FDFBF7; display: flex; align-items: center; padding-left: 20px; font-weight: bold; font-size: 1.5rem; }
 
 /* Zone Ordini con Linea Divisoria */
 #listaPrep { 
     padding: 20px; 
-    border-right: 4px solid #4A3728; 
+    border-right: 4px solid #CC5500; 
     overflow-y: auto; /* Scroll interno se troppi ordini */
     display: flex;
     flex-direction: column;
