@@ -160,3 +160,54 @@ button:hover { background-color: #a04300; }
     background-color: #C0392B;
     border: 2px;
 }
+
+#toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.toast-aggiunta {
+    background-color: #2D4F31;
+    color: #FDFBF7;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: sans-serif;
+    animation: scivolaDentro 0.3s ease-out;
+}
+
+.toast-error {
+    background-color: #db0000;
+    color: #020202;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: sans-serif;
+    animation: scivolaDentro 0.3s ease-out;
+}
+
+.toast-rimozione {
+    background-color: #C0392B;
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-family: sans-serif;
+    animation: scivolaDentro 0.3s ease-out;
+}
+
+@keyframes scivolaDentro{
+    0%{
+        transform: translateX(120%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}

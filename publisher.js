@@ -15,9 +15,27 @@ function aggiungi(nome, prezzo) {
         ordine.push({ nome: nome, prezzo: prezzo, quantita: 1});
     }
     costo += prezzo;
+    creaToast(`Hai aggiunto ${nome}`,"toast-aggiunta");
 }
 
+window.creaToast = function(txt,classe){
+    const container = document.getElementById("toast-container");
+    const nuovoToast = document.createElement("div");
+    nuovoToast.classList.add(classe);
+    
+    nuovoToast.innerHTML = txt;
+
+    container.appendChild(nuovoToast);
+
+    setTimeout(() => {
+        nuovoToast.remove();
+    }, 3000);
+}
+
+
 window.remove = function(indice){
+    creaToast(`Hai rimosso dal tuo ordine ${ordine[indice].nome}`,"toast-rimozione");
+
     ordine[indice].quantita--;
     costo -= ordine[indice].prezzo;
     if(ordine[indice].quantita == 0){
@@ -27,38 +45,40 @@ window.remove = function(indice){
 } 
 
 window.caricaPaginaPagamento = function (){
-        const container = document.getElementById("contenuto");
-        let listaProdottiHTML = "";
-        
-        if (ordine.length === 0) {
-            listaProdottiHTML = "<p style='text-align:center; color:#777;'>Il tuo carrello è vuoto! Torna al menu.</p>";
-        } else {
-            for (let i = 0; i < ordine.length; i++) {
-                listaProdottiHTML += `
-                    <div class="item-carrello" style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 6px;">
-                        <span>X ${ordine[i].quantita}  ${ordine[i].nome}</span>
-                        <span>${ordine[i].prezzo}€</span>
-                    </div>`;
-                listaProdottiHTML += `<button class="btn_remover" onclick="remove(${i})">REMOVE</button>`
-            }
-        }
+    const container = document.getElementById("contenuto");
+    let listaProdottiHTML = "";
 
-        container.innerHTML = `
-            <div class="box-carrello">
-                <h3>Riepilogo dell'Ordine</h3>
-                
-                <div id="riepilogo-prodotti" style="margin-top: 15px;">
-                    ${listaProdottiHTML}
-                </div>
-                
-                <div class="totale-carrello">
-                    <span>Conto Totale:</span>
-                    <span><span id="prezzoTotale">${costo}</span>€</span>
-                </div>
-                
-                <button class="pulsante-paga" onclick="mandaPagamento()">Paga e Invia Ordine</button>
-            </div>`;
+    if (ordine.length === 0) {
+        listaProdottiHTML = "<p style='text-align:center; color:#777;'>Il tuo carrello è vuoto! Torna al menu.</p>";
+    } else {
+        for (let i = 0; i < ordine.length; i++) {
+            listaProdottiHTML += `
+                <div class="item-carrello" style="display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 6px;">
+                    <span>X ${ordine[i].quantita}  ${ordine[i].nome}</span>
+                    <span>${ordine[i].prezzo}€</span>
+                </div>`;
+            listaProdottiHTML += `<button class="btn_remover" onclick="remove(${i})">REMOVE</button>`
+            listaProdottiHTML += `</br>`;
+            listaProdottiHTML += `</br>`;
+        }
     }
+
+    container.innerHTML = `
+        <div class="box-carrello">
+            <h3>Riepilogo dell'Ordine</h3>
+
+            <div id="riepilogo-prodotti" style="margin-top: 15px;">
+                ${listaProdottiHTML}
+            </div>
+                
+            <div class="totale-carrello">
+                <span>Conto Totale:</span>
+                <span><span id="prezzoTotale">${costo}</span>€</span>
+            </div>
+                
+            <button class="pulsante-paga" onclick="mandaPagamento()">Paga e Invia Ordine</button>
+        </div>`;
+}
 
 window.mandaPagamento = function(){
     if (client.connected) {
@@ -79,7 +99,9 @@ window.mandaPagamento = function(){
             document.getElementById("contenuto").innerHTML = `<h1>Non hai ancora ordinato niente,devi ordinare qualcosa!!!</h1>`;
         }
     }
-    else {alert("Non sei ancora connesso al broker!");}
+    else {
+        creaToast("Non sei ancora connesso al broker!","toast-error");
+    }
 }
 
 
@@ -107,6 +129,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
         caricaPaginaPagamento();
         
     }); 
-    
-    
 });
