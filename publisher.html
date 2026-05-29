@@ -2,20 +2,29 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
+    <title>Burger Ordering</title>
     <link rel="stylesheet" href="publisher.css">
+
     <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
     <script src="publisher.js" defer></script>
 </head>
+
 <body>
+
     <aside class="sidebar">
         <button id="mostraMenu">MENÙ</button>
         <button id="mostraPagamento">PAGA</button>
     </aside>
+
     <main id="area-principale">
-        <div id="contenuto"><img src="images/pubblicita.png" alt=""></div>
+
+        <div id="contenuto" class="home-banner">
+            <img src="images/pubblicita.png" alt="Pubblicità">
+        </div>
+
     </main>
 
-    <div class="toast-container" id="toast-container"></div>
+    <div id="toast-container"></div>
 
 </body>
 </html>
