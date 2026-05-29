@@ -1,213 +1,267 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body { 
-    display: flex; 
-    height: 100vh; 
-    font-family: 'Segoe UI', Tahoma, sans-serif; 
-    background-color: #FDFBF7; 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-/* Sidebar: Gestisce i due pulsanti principali */
-.sidebar { 
-    width: 300px; 
-    background-color: #4A3728; 
-    padding: 60px 20px; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 40px; 
-    border-right: 5px solid #CC5500;
+body{
+    display:flex;
+    min-height:100vh;
+    background-color:#FDFBF7;
+    font-family:'Segoe UI', Tahoma, sans-serif;
+    overflow:hidden;
 }
 
-button { 
-    padding: 40px 20px; 
-    font-weight: bold; 
-    cursor: pointer; 
-    border: none; 
-    border-radius: 15px; 
-    background-color: #CC5500; 
-    color: #FDFBF7; 
-    font-size: 1.6rem; 
-    transition: 0.3s;
+/* SIDEBAR */
+
+.sidebar{
+    width:280px;
+    background:#4A3728;
+    padding:40px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:25px;
+    flex-shrink:0;
+    border-right:5px solid #CC5500;
 }
 
-button:hover { background-color: #a04300; }
+/* BOTTONI */
 
-/* Contenuto Dinamico */
-#area-principale { 
-    flex-grow: 1; 
-    display: flex; 
-    flex-direction: column; /* Imposta in colonna */
-    align-items: center;    /* Centra orizzontalmente */
-    padding: 40px 0;        /* Spazio sopra e sotto */
-    color: #2D4F31; 
-    overflow-y: auto;       /* Permette lo scroll se il contenuto è lungo */
-    height: 100vh;          /* Forza l'altezza al 100% della pagina */
+button{
+    background:#CC5500;
+    color:#fff;
+    border:none;
+    border-radius:14px;
+    padding:28px 20px;
+    font-size:1.4rem;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.2s;
 }
 
-.voce-menu { 
-    background-color: #FDFBF7; 
-    border: 3px solid #4A3728; 
-    color: #2D4F31; 
-    padding: 30px; 
-    margin: 20px; 
-    border-radius: 15px; 
-    width: 350px; 
-    text-align: center; 
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Distanza tra nome menu e tasto */
+button:hover{
+    background:#a04300;
 }
 
-.pulsante-aggiungi { 
-    background-color: #CC5500; 
-    color: #FDFBF7; 
-    padding: 20px; 
-    width: 100%; 
-    border-radius: 8px; 
-    font-size: 1.2rem;
-    font-weight: bold;
-    border: none;
+/* AREA PRINCIPALE */
+
+#area-principale{
+    flex:1;
+    height:100vh;
+    overflow-y:auto;
+    background:#FDFBF7;
 }
 
-#area-pagamento { 
-    background-color: #FDFBF7; 
-    padding: 40px; 
-    border: 3px solid #4A3728; 
-    border-radius: 15px; 
-    text-align: center; 
-}
-#contenuto {
-    display: flex;
-    flex-wrap: wrap;        /* Permette agli elementi di andare a capo */
-    justify-content: center;
-    width: 100%;
-    max-width: 900px;       /* Limita la larghezza massima */
-    padding: 20px;
+/* CONTENUTO */
+
+#contenuto{
+    width:100%;
+    min-height:100%;
+    padding:30px;
 }
 
+/* HOME */
 
-/* --- BOX CONTENITORE DEL CARRELLO (Isola la grafica dal menu) --- */
-.box-carrello {
-    background-color: #ffffff;
-    border: 3px solid #4A3728;
-    border-radius: 15px;
-    padding: 30px;
-    width: 100%;
-    max-width: 500px; /* Dimensione perfetta per uno scontrino centrato */
-    margin: 20px auto; /* Lo centra perfettamente nello schermo */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
+#contenuto.home-banner{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100vh;
+    padding:0;
 }
 
-.box-carrello h3 {
-    color: #4A3728;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 1.8rem;
+#contenuto.home-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
 }
 
-/* I singoli elementi dentro il carrello */
-.item-carrello {
-    width: 100% !important;
-    font-size: 1.2rem;
-    color: #2D4F31;
+/* SEZIONI MENU */
+
+.sezione-menu{
+    width:100%;
+    max-width:900px;
+    margin:0 auto 40px auto;
 }
 
-/* Il totale del conto */
-.totale-carrello {
-    font-size: 1.4rem;
-    font-weight: bold;
-    margin-top: 15px;
-    margin-bottom: 25px;
-    color: #4A3728;
-    border-top: 2px solid #4A3728;
-    padding-top: 15px;
-    display: flex;
-    justify-content: space-between;
+.titolo-sezione{
+    font-size:2rem;
+    font-weight:800;
+    color:#4A3728;
+    margin-bottom:20px;
+    padding-bottom:10px;
+    border-bottom:4px solid #CC5500;
 }
 
-/* IL BOTTONE DI PAGAMENTO (Specifico e pulito) */
-.pulsante-paga {
-    background-color: #CC5500 !important;
-    color: #FDFBF7 !important;
-    padding: 20px !important;  /* Padding umano, non gigante */
-    font-size: 1.3rem !important;
-    font-weight: bold;
-    width: 100%;
-    border-radius: 10px !important;
-    cursor: pointer;
-    transition: 0.3s;
-    text-align: center;
+/* GRIGLIA MENU 2 COLONNE */
+
+.griglia-menu{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:30px;
 }
 
-.pulsante-paga:hover {
-    background-color: #a04300 !important;
+/* CARD MENU */
+
+.voce-menu{
+    background:#fff;
+    border:3px solid #4A3728;
+    border-radius:18px;
+    padding:25px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
 }
+
+/* IMMAGINI */
+
+.immaggini,
+.immaghini{
+    width:100%;
+    height:220px;
+    object-fit:contain;
+}
+
+/* TITOLI CARD */
+
+.voce-menu h3{
+    color:#2D4F31;
+    font-size:1.35rem;
+    min-height:55px;
+}
+
+/* BOTTONE AGGIUNGI */
+
+.pulsante-aggiungi{
+    width:100%;
+    padding:18px;
+    border-radius:10px;
+    font-size:1rem;
+}
+
+/* CARRELLO */
+
+.box-carrello{
+    max-width:600px;
+    margin:40px auto;
+    background:#fff;
+    border:3px solid #4A3728;
+    border-radius:20px;
+    padding:30px;
+}
+
+.box-carrello h3{
+    text-align:center;
+    font-size:2rem;
+    color:#4A3728;
+    margin-bottom:20px;
+}
+
+.item-carrello{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:12px;
+    padding-bottom:10px;
+    border-bottom:1px dashed #ddd;
+    font-size:1.15rem;
+    color:#2D4F31;
+}
+
+.totale-carrello{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:2px solid #4A3728;
+    font-size:1.4rem;
+    font-weight:bold;
+    color:#4A3728;
+}
+
+.pulsante-paga{
+    width:100%;
+    margin-top:20px;
+    padding:18px;
+    font-size:1.2rem;
+}
+
+/* RIMUOVI */
 
 .btn_remover{
-    background: transparent;
-    color: #C0392B;
-    border: none;
-    font-size: 1rem;
-    cursor: pointer;
-    padding: 5px 10px;
-    transition: 0.2s;
+    background:transparent;
+    color:#C0392B;
+    border:none;
+    font-size:1rem;
+    cursor:pointer;
+    padding:8px;
 }
 
-.btn_remover:hover {
-    color: #ffffff;
-    background-color: #C0392B;
-    border: 2px;
+.btn_remover:hover{
+    background:#C0392B;
+    color:#fff;
+    border-radius:8px;
 }
 
-#toast-container {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
+/* TOAST */
+
+#toast-container{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    z-index:9999;
 }
 
-.toast-aggiunta {
-    background-color: #2D4F31;
-    color: #FDFBF7;
-    padding: 15px 25px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    font-family: sans-serif;
-    animation: scivolaDentro 0.3s ease-out;
+.toast-aggiunta,
+.toast-rimozione,
+.toast-error{
+    color:white;
+    padding:14px 20px;
+    border-radius:10px;
+    font-weight:bold;
+    box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    animation:scivolaDentro .3s ease-out;
 }
 
-.toast-error {
-    background-color: #db0000;
-    color: #020202;
-    padding: 15px 25px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    font-family: sans-serif;
-    animation: scivolaDentro 0.3s ease-out;
+.toast-aggiunta{
+    background:#2D4F31;
 }
 
-.toast-rimozione {
-    background-color: #C0392B;
-    color: #ffffff;
-    padding: 15px 25px;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    font-family: sans-serif;
-    animation: scivolaDentro 0.3s ease-out;
+.toast-rimozione{
+    background:#C0392B;
 }
+
+.toast-error{
+    background:#db0000;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:900px){
+    .griglia-menu{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        width:220px;
+    }
+}
+
+/* ANIMAZIONE */
 
 @keyframes scivolaDentro{
-    0%{
-        transform: translateX(120%);
+    from{
+        transform:translateX(120%);
+        opacity:0;
     }
-    100%{
-        transform: translateX(0);
+
+    to{
+        transform:translateX(0);
+        opacity:1;
     }
 }
