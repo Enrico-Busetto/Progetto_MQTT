@@ -5,32 +5,24 @@ let matrix_id = Math.floor(Math.random() * 900) + 100;
 
 function aggiungi(nome, prezzo) {
     let duplicato = false;
-
     for(let i=0; i<ordine.length && !duplicato; i++){
         if(ordine[i].nome == nome){
             ordine[i].quantita++;
             duplicato = true;
         }
     }
-
     if(!duplicato){
-        ordine.push({
-            nome: nome,
-            prezzo: prezzo,
-            quantita: 1
-        });
+        ordine.push({ nome: nome, prezzo: prezzo, quantita: 1});
     }
-
     costo += prezzo;
-
     creaToast(`Hai aggiunto ${nome}`,"toast-aggiunta");
 }
 
 window.creaToast = function(txt,classe){
     const container = document.getElementById("toast-container");
-
     const nuovoToast = document.createElement("div");
     nuovoToast.classList.add(classe);
+    
     nuovoToast.innerHTML = txt;
 
     container.appendChild(nuovoToast);
@@ -42,18 +34,15 @@ window.creaToast = function(txt,classe){
 
 
 window.remove = function(indice){
-    creaToast(`Hai rimosso ${ordine[indice].nome}`,"toast-rimozione");
+    creaToast(`Hai rimosso dal tuo ordine ${ordine[indice].nome}`,"toast-rimozione");
 
     ordine[indice].quantita--;
     costo -= ordine[indice].prezzo;
-
     if(ordine[indice].quantita == 0){
         ordine.splice(indice,1);
     }
-
     caricaPaginaPagamento();
-}
-
+} 
 
 window.caricaPaginaPagamento = function (){
     const container = document.getElementById("contenuto");
@@ -105,148 +94,141 @@ window.caricaPaginaPagamento = function (){
     `;
 }
 
-
 window.mandaPagamento = function(){
-
-    if(client.connected){
-
+    if (client.connected) {
         const pacchettoDati = {
             id: matrix_id,
             prodotti: ordine,
-            prezzo: costo
+            prezzo: costo,
         };
-
         if(ordine.length > 0){
-
-            client.publish(
-                "Ordini",
-                JSON.stringify(pacchettoDati)
-            );
-
+            client.publish("Ordini",JSON.stringify(pacchettoDati));
             matrix_id++;
             ordine = [];
             costo = 0;
-
-            document.getElementById("contenuto").innerHTML =
-                `<h1>Grazie per aver ordinato</h1>`;
+            console.log(`Inviato: ${JSON.stringify(pacchettoDati)}`);
+            ordineRicevuto();
+            document.getElementById("contenuto").innerHTML = `<h1>Grazie per aver ordinato</h1>`;
         }
         else{
-            document.getElementById("contenuto").innerHTML =
-                `<h1>Non hai ancora ordinato niente!</h1>`;
+            document.getElementById("contenuto").innerHTML = `<h1>Non hai ancora ordinato niente,devi ordinare qualcosa!!!</h1>`;
         }
     }
-    else{
-        creaToast(
-            "Non sei ancora connesso al broker!",
-            "toast-error"
-        );
+    else {
+        creaToast("Non sei ancora connesso al broker!","toast-error");
     }
 }
 
+function ordineRicevuto(){
+    client.removeAllListeners("message");
+    client.on("message", (topic, message) => {
+    if (topic === "Finito") {
+        const msg = JSON.parse(message);
+        if (msg && msg.id) {
+            creaToast(`L'ordine numero ${msg.id} è arrivato! `, "toast-aggiunta");
+        }
+    }
+    });
+}
 
-document.addEventListener('DOMContentLoaded', () => {
 
-    client.on(
-        'connect',
-        () => console.log("Publisher connesso al Broker!")
+document.addEventListener('DOMContentLoaded', (event) => {
+    client.on('connect', (event) => {
+        console.log("Publisher connesso al Broker!");
+        client.subscribe("Finito");
+        }
     );
 
-    document
-    .getElementById("mostraMenu")
-    .addEventListener('click',(event)=>{
-
+    document.getElementById("mostraMenu").addEventListener('click',(event)=>{
         event.preventDefault();
-
-        const container =
-            document.getElementById("contenuto");
+        const container = document.getElementById("contenuto");
 
         container.classList.remove("home-banner");
 
         container.innerHTML = `
-<div class="sezione-menu">
-    <h2 class="titolo-sezione">PANINI</h2>
+            <div class="sezione-menu">
+                <h2 class="titolo-sezione">PANINI</h2>
 
-    <div class="griglia-menu">
+                <div class="griglia-menu">
 
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Classico.png">
-            <h3>Classico - 7,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Classico', 7.50)">AGGIUNGI</button>
-        </div>
+                    <div class="voce-menu">
+                        <img class="immaggini" src="images/Classico.png">
+                        <h3>Classico - 7,50€</h3>
+                        <button class="pulsante-aggiungi" onclick="aggiungi('Classico', 7.50)">AGGIUNGI</button>
+                    </div>
 
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Crunch.png">
-            <h3>Crunch - 9,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Crunch', 9.50)">AGGIUNGI</button>
-        </div>
+                    <div class="voce-menu">
+                        <img class="immaggini" src="images/Crunch.png">
+                        <h3>Crunch - 9,50€</h3>
+                        <button class="pulsante-aggiungi" onclick="aggiungi('Crunch', 9.50)">AGGIUNGI</button>
+                    </div>
 
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Golden.png">
-            <h3>Golden - 10,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Golden', 10.50)">AGGIUNGI</button>
-        </div>
+                    <div class="voce-menu">
+                        <img class="immaggini" src="images/Golden.png">
+                        <h3>Golden - 10,50€</h3>
+                        <button class="pulsante-aggiungi" onclick="aggiungi('Golden', 10.50)">AGGIUNGI</button>
+                    </div>
 
-        <div class="voce-menu">
-            <img class="immaggini" src="images/SmashDoppio.png">
-            <h3>Smash Doppio - 11,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Smash', 11.50)">AGGIUNGI</button>
-        </div>
+                    <div class="voce-menu">
+                        <img class="immaggini" src="images/SmashDoppio.png">
+                        <h3>Smash Doppio - 11,50€</h3>
+                        <button class="pulsante-aggiungi" onclick="aggiungi('Smash', 11.50)">AGGIUNGI</button>
+                    </div>
 
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Smoke.png">
-            <h3>Smoke - 12,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Smoke', 12.50)">AGGIUNGI</button>
-        </div>
+                    <div class="voce-menu">
+                        <img class="immaggini" src="images/Smoke.png">
+                        <h3>Smoke - 12,50€</h3>
+                    <button class="pulsante-aggiungi" onclick="aggiungi('Smoke', 12.50)">AGGIUNGI</button>
+                    </div>
 
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Iconic.png">
-            <h3>Iconic - 13,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Iconic', 13.50)">AGGIUNGI</button>
-        </div>
+                    <div class="voce-menu">
+                        <img class="immaggini" src="images/Iconic.png">
+                        <h3>Iconic - 13,50€</h3>
+                        <button class="pulsante-aggiungi" onclick="aggiungi('Iconic', 13.50)">AGGIUNGI</button>
+                    </div>
 
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Wild.png">
-            <h3>Wild - 12,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Wild', 12.50)">AGGIUNGI</button>
-        </div>
+                    <div class="voce-menu">
+                        <img class="immaggini" src="images/Wild.png">
+                        <h3>Wild - 12,50€</h3>
+                        <button class="pulsante-aggiungi" onclick="aggiungi('Wild', 12.50)">AGGIUNGI</button>
+                    </div>
 
-    </div>
-</div>
-
-
-<div class="sezione-menu">
-    <h2 class="titolo-sezione">BIBITE</h2>
-
-    <div class="griglia-menu">
-
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Acqua.png">
-            <h3>Acqua 0,5L - 1,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Acqua', 1.50)">AGGIUNGI</button>
-        </div>
-
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Bibite.png">
-            <h3>Bibita a scelta - 3,00€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Bibite', 3.00)">AGGIUNGI</button>
-        </div>
-
-        <div class="voce-menu">
-            <img class="immaggini" src="images/Birra.png">
-            <h3>Birra alla spina 0,3L - 4,50€</h3>
-            <button class="pulsante-aggiungi" onclick="aggiungi('Birra', 4.50)">AGGIUNGI</button>
-        </div>
-
-    </div>
-</div>`;
+                </div>
+            </div>
 
 
-    document
-    .getElementById("mostraPagamento")
-    .addEventListener('click',(event)=>{
+            <div class="sezione-menu">
+                <h2 class="titolo-sezione">BIBITE</h2>
+
+                <div class="griglia-menu">
+
+                <div class="voce-menu">
+                    <img class="immaggini" src="images/Acqua.png">
+                    <h3>Acqua 0,5L - 1,50€</h3>
+                    <button class="pulsante-aggiungi" onclick="aggiungi('Acqua', 1.50)">AGGIUNGI</button>
+                </div>
+
+                <div class="voce-menu">
+                    <img class="immaggini" src="images/Bibite.png">
+                    <h3>Bibita a scelta - 3,00€</h3>
+                    <button class="pulsante-aggiungi" onclick="aggiungi('Bibite', 3.00)">AGGIUNGI</button>
+                </div>
+
+                <div class="voce-menu">
+                    <img class="immaggini" src="images/Birra.png">
+                    <h3>Birra alla spina 0,3L - 4,50€</h3>
+                    <button class="pulsante-aggiungi" onclick="aggiungi('Birra', 4.50)">AGGIUNGI</button>
+                </div>
+
+                </div>
+            </div>`;
+});
+
+    
+
+    document.getElementById("mostraPagamento").addEventListener('click', (event) => {
         event.preventDefault();
         caricaPaginaPagamento();
-    });
-
+        
+    }); 
 });
-})

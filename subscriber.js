@@ -20,12 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log(tempo_random);
             lista_finito.push(lista_prep.shift());
             renderLists();
+            mandaOrdineFinito();
             tempo_random = generaTempoRandomico();
         }
         },tempo_random);
 
     });
 });
+
+
+function mandaOrdineFinito(){
+    console.log(lista_finito[lista_finito.length -1 ].id);
+    let str = JSON.stringify(lista_finito[lista_finito.length - 1]);
+    console.log("Sto mandando l'ordine finito");
+    client.publish("Finito", str);
+}
 
 //Carica le 2 liste in preparazione e processo finito . 
 function renderLists() {
