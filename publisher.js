@@ -57,7 +57,7 @@ window.caricaPaginaPagamento = function (){
                     <span>X ${ordine[i].quantita}  ${ordine[i].nome}</span>
                     <span>${ordine[i].prezzo}€</span>
                 </div>`;
-            listaProdottiHTML += `<button class="btn_remover" onclick="remove(${i})">REMOVE</button>`
+            listaProdottiHTML += `<button class="btn_remover" onclick="remove(${i})">RIMUOVI</button>`
             listaProdottiHTML += `</br>`;
             listaProdottiHTML += `</br>`;
         }
@@ -112,14 +112,56 @@ document.addEventListener('DOMContentLoaded', (event) => {
         event.preventDefault();
         const container = document.getElementById("contenuto");
 
-        container.innerHTML =  `<div class="voce-menu"><h3>Crunch - 9,50€</h3><button class="pulsante-aggiungi" onclick="aggiungi('Crunch', 9.50)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Golden - 10,50€</h3><button class="pulsante-aggiungi" onclick="aggiungi('Golden', 10.50)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Smash - 11,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Smash', 11.50)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Smoke - 12,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Smoke', 12.50)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Iconic - 13,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Iconic', 13.50)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Acqua(0,5L) - 1,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Acqua', 1.50)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Bibite in lattina - 3,00€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Bibite', 3.00)">AGGIUNGI</button></div>
-        <div class="voce-menu"><h3>Birra alla spina (0,3l) - 4,50€</h3><button class ="pulsante-aggiungi" onclick="aggiungi('Bibite',4.50)">AGGIUNGI</button></div>`;
+        container.innerHTML =  `
+        <div class="voce-menu">
+        <img class="immaghini" src="images/Classico.png">
+        <h3>Crunch - 7,50€</h3>
+        <button class="pulsante-aggiungi" onclick="aggiungi('Classico', 7.50)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Crunch.png">
+        <h3>Crunch - 9,50€</h3>
+        <button class="pulsante-aggiungi" onclick="aggiungi('Crunch', 9.50)">AGGIUNGI</button></div>
+   
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Golden.png">
+        <h3>Golden - 10,50€</h3>
+        <button class="pulsante-aggiungi" onclick="aggiungi('Golden', 10.50)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/SmashDoppio.png">
+        <h3>Smash Doppio - 11,50€</h3>
+        <button class ="pulsante-aggiungi" onclick="aggiungi('Smash', 11.50)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Smoke.png">
+        <h3>Smoke - 12,50€</h3>
+        <button class ="pulsante-aggiungi" onclick="aggiungi('Smoke', 12.50)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Iconic.png">
+        <h3>Iconic - 13,50€</h3>
+        <button class ="pulsante-aggiungi" onclick="aggiungi('Iconic', 13.50)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Wild.png">
+        <h3>Wild - 12,50€</h3>
+        <button class="pulsante-aggiungi" onclick="aggiungi('Wild', 12.50)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Acqua.png">
+        <h3>Acqua(0,5L) - 1,50€</h3>
+        <button class ="pulsante-aggiungi" onclick="aggiungi('Acqua', 1.50)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Bibite.png">
+        <h3>Bibita a scelta - 3,00€</h3>
+        <button class ="pulsante-aggiungi" onclick="aggiungi('Bibite', 3.00)">AGGIUNGI</button></div>
+
+        <div class="voce-menu">
+        <img class="immaggini" src="images/Birra.png">
+        <h3>Birra alla spina (0,3l) - 4,50€</h3>
+        <button class ="pulsante-aggiungi" onclick="aggiungi('Bibite',4.50)">AGGIUNGI</button></div>`;
     });
 
     
