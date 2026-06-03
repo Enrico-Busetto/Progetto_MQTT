@@ -7,30 +7,39 @@ let tempo_random = generaTempoRandomico();
 document.addEventListener('DOMContentLoaded', () => {
     client.on('connect', () => console.log("Subscriber connesso al Broker!"));
     client.subscribe("Ordini");
-
+    client.subscribe("Ritirato");
+    
     //Ricezione messaggi
     client.on('message', (topic, message) => {
         const msg = JSON.parse(message.toString());
-        lista_prep.push(msg);
-        renderLists();
-
-        // Cambio dei procesi da una lista all altra
-        setTimeout(() => {
-        if(lista_prep.length > 0) {
-            console.log(tempo_random);
-            lista_finito.push(lista_prep.shift());
+        if(topic == "Ordini"){
+            lista_prep.push(msg);
             renderLists();
-            mandaOrdineFinito();
-            tempo_random = generaTempoRandomico();
+            // Cambio dei procesi da una lista all altra
+            setTimeout(() => {
+                if(lista_prep.length > 0) {
+                    console.log(tempo_random);
+                    lista_finito.push(lista_prep.shift());
+                    renderLists();
+                    mandaOrdineFinito();
+                    tempo_random = generaTempoRandomico();
+                }
+            },tempo_random);
         }
-        },tempo_random);
 
+        else if(topic == "Ritirato"){
+            let index = lista_finito.findIndex(ordine => ordine.id == msg.id);
+            console.log(index);
+            if (index !== -1) {
+                lista_finito.splice(index, 1);
+                renderLists();
+            }
+        }
     });
 });
 
 
 function mandaOrdineFinito(){
-    console.log(lista_finito[lista_finito.length -1 ].id);
     let str = JSON.stringify(lista_finito[lista_finito.length - 1]);
     console.log("Sto mandando l'ordine finito");
     client.publish("Finito", str);

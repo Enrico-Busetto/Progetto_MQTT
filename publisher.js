@@ -85,13 +85,18 @@ window.caricaPaginaPagamento = function (){
                 <span>Conto Totale:</span>
                 <span>${costo}€</span>
             </div>
-
-            <button class="pulsante-paga" onclick="mandaPagamento()">
-                Paga e Invia Ordine
-            </button>
-
+            <div class="tooltip-wrapper" id="wrapper-pagamento" data-tooltip="Aggiungi dei prodotti al carrello per pagare!">
+                <button class="pulsante-paga" onclick="mandaPagamento()" id="btnPagamento">
+                    Paga e Invia Ordine
+                </button>
+            </div>
         </div>
     `;
+
+    if(ordine.length == 0){
+        document.getElementById("btnPagamento").disabled = true;
+    }
+
 }
 
 window.mandaPagamento = function(){
@@ -101,34 +106,55 @@ window.mandaPagamento = function(){
             prodotti: ordine,
             prezzo: costo,
         };
-        if(ordine.length > 0){
-            client.publish("Ordini",JSON.stringify(pacchettoDati));
-            matrix_id++;
-            ordine = [];
-            costo = 0;
-            console.log(`Inviato: ${JSON.stringify(pacchettoDati)}`);
-            ordineRicevuto();
-            document.getElementById("contenuto").innerHTML = `<h1>Grazie per aver ordinato</h1>`;
-        }
-        else{
-            document.getElementById("contenuto").innerHTML = `<h1>Non hai ancora ordinato niente,devi ordinare qualcosa!!!</h1>`;
-        }
+        
+        client.publish("Ordini",JSON.stringify(pacchettoDati));
+        
+        //Notifica quando abbiamo mandato il nostro ordine
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.classList.add("toast-ritiro");
+        toast.innerHTML = `Abbiamo mandato il tuo ordine numero : ${matrix_id}`;
+        toast.id = `toast-ordine-${matrix_id}`;
+        container.appendChild(toast);
+            
+        //Reset 
+        matrix_id++;
+        ordine = [];
+        costo = 0;
+        //Notifica quando è pronto il nostro ordine
+        ordineRicevuto();
+
+        document.getElementById("contenuto").innerHTML = `<h1>Grazie per aver ordinato</h1>`;
     }
     else {
         creaToast("Non sei ancora connesso al broker!","toast-error");
     }
 }
 
-function ordineRicevuto(){
+window.ordineRicevuto = function(){
     client.removeAllListeners("message");
     client.on("message", (topic, message) => {
-    if (topic === "Finito") {
-        const msg = JSON.parse(message);
-        if (msg && msg.id) {
-            creaToast(`L'ordine numero ${msg.id} è arrivato! `, "toast-aggiunta");
+        if (topic === "Finito") {
+            const msg = JSON.parse(message);
+            if (msg && msg.id) {
+                const toast = document.getElementById(`toast-ordine-${msg.id}`);
+
+                toast.innerHTML=`
+                <div>
+                    L'ordine ${msg.id} è pronto per il ritiro 
+                    <button class ="toast-button" onclick=ritiraOrdine(${msg.id})>Ritira Ordine</button>
+                </div>`;
         }
     }
     });
+}
+
+window.ritiraOrdine = function(id){
+    console.log(id);
+    const toast = document.getElementById(`toast-ordine-${id}`);
+    toast.remove();
+    const dati = { id: id };
+    client.publish("Ritirato",JSON.stringify(dati));
 }
 
 
