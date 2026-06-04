@@ -1,68 +1,155 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body { 
-    background-color: #4A3728; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    height: 100vh; 
-    font-family: 'Segoe UI', Tahoma, sans-serif; 
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.container { 
-    background-color: #FDFBF7; 
-    width: 900px; 
-    height: 550px; 
-    display: grid; 
-    grid-template-columns: 1fr 2fr; 
-    grid-template-rows: 70px 1fr 60px; 
-    border: 6px solid #4A3728; 
-    overflow: hidden; 
+body{
+    background:#4A3728;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:'Segoe UI', Tahoma, sans-serif;
+    overflow:hidden;
 }
 
-/* Intestazioni */
-.header-prep { background-color: #CC5500; color: #FDFBF7; display: flex; align-items: center; padding-left: 20px; font-weight: bold; font-size: 1.5rem; }
-.header-collet { background-color: #2D4F31; color: #FDFBF7; display: flex; align-items: center; padding-left: 20px; font-weight: bold; font-size: 1.5rem; }
-
-/* Zone Ordini con Linea Divisoria */
-#listaPrep { 
-    padding: 20px; 
-    border-right: 4px solid #CC5500; 
-    overflow-y: auto; /* Scroll interno se troppi ordini */
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.container{
+    background:#FDFBF7;
+    width:95vw;
+    height:92vh;
+    display:grid;
+    grid-template-columns:1fr 2fr;
+    grid-template-rows:90px 1fr 80px;
+    border:8px solid #4A3728;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,0.25);
 }
 
-#listaFinito { 
-    padding: 20px; 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 20px; 
-    align-content: start; 
-    overflow-y: auto;
+.header-prep{
+    background:#CC5500;
+    color:#FDFBF7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    font-size:2rem;
+    letter-spacing:1px;
 }
 
-/* Numeri Ordine */
-.ordine { 
-    font-size: 2.8rem; 
-    font-weight: 900; 
-    color: #2D4F31; 
-    text-align: center; 
-    padding: 10px;
-    background-color: #f1ede8;
-    border-radius: 8px;
+.header-collet{
+    background:#2D4F31;
+    color:#FDFBF7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:900;
+    font-size:2rem;
+    letter-spacing:1px;
 }
 
-/* Footer Fisso */
-.footer-tab { 
-    grid-column: span 2; 
-    background-color: #CC5500; 
-    color: #FDFBF7; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    font-size: 1.2rem; 
-    font-weight: bold;
-    height: 60px;
+#listaPrep{
+    padding:30px;
+    border-right:5px solid #CC5500;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+#listaFinito{
+    padding:30px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:25px;
+    align-content:start;
+    overflow-y:auto;
+}
+
+.ordine-box{
+    background:#f1ede8;
+    border:3px solid #2D4F31;
+    border-radius:15px;
+    padding:20px;
+    transition:.2s;
+}
+
+.ordine-box:hover{
+    transform:scale(1.03);
+}
+
+.ordine-box h3{
+    color:#2D4F31;
+    font-size:1.7rem;
+    margin-bottom:10px;
+    font-weight:900;
+}
+
+.ordine-box p{
+    color:#4A3728;
+    font-size:1.1rem;
+    line-height:1.5;
+}
+
+.ordine{
+    font-size:4rem;
+    font-weight:900;
+    color:#2D4F31;
+    text-align:center;
+    padding:15px;
+    background:#f1ede8;
+    border-radius:12px;
+}
+
+.footer-tab{
+    grid-column:span 2;
+    background:#CC5500;
+    color:#FDFBF7;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:1.3rem;
+    font-weight:700;
+    text-align:center;
+    padding:0 20px;
+}
+
+#listaPrep::-webkit-scrollbar,
+#listaFinito::-webkit-scrollbar{
+    width:12px;
+}
+
+#listaPrep::-webkit-scrollbar-thumb,
+#listaFinito::-webkit-scrollbar-thumb{
+    background:#CC5500;
+    border-radius:10px;
+}
+
+#listaPrep::-webkit-scrollbar-track,
+#listaFinito::-webkit-scrollbar-track{
+    background:#ece7df;
+}
+
+@media(max-width:1400px){
+    #listaFinito{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:1000px){
+    .container{
+        width:100vw;
+        height:100vh;
+        border-radius:0;
+    }
+
+    #listaFinito{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .header-prep,
+    .header-collet{
+        font-size:1.5rem;
+    }
 }
