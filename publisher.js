@@ -5,24 +5,24 @@ let matrix_id = Math.floor(Math.random() * 900) + 100;
 
 function aggiungi(nome, prezzo) {
     let duplicato = false;
-    for(let i=0; i<ordine.length && !duplicato; i++){
-        if(ordine[i].nome == nome){
+    for (let i = 0; i < ordine.length && !duplicato; i++) {
+        if (ordine[i].nome == nome) {
             ordine[i].quantita++;
             duplicato = true;
         }
     }
-    if(!duplicato){
-        ordine.push({ nome: nome, prezzo: prezzo, quantita: 1});
+    if (!duplicato) {
+        ordine.push({ nome: nome, prezzo: prezzo, quantita: 1 });
     }
     costo += prezzo;
-    creaToast(`Hai aggiunto ${nome}`,"toast-aggiunta");
+    creaToast(`Hai aggiunto ${nome}`, "toast-aggiunta");
 }
 
-window.creaToast = function(txt,classe){
+window.creaToast = function (txt, classe) {
     const container = document.getElementById("toast-container");
     const nuovoToast = document.createElement("div");
     nuovoToast.classList.add(classe);
-    
+
     nuovoToast.innerHTML = txt;
 
     container.appendChild(nuovoToast);
@@ -33,18 +33,18 @@ window.creaToast = function(txt,classe){
 }
 
 
-window.remove = function(indice){
-    creaToast(`Hai rimosso dal tuo ordine ${ordine[indice].nome}`,"toast-rimozione");
+window.remove = function (indice) {
+    creaToast(`Hai rimosso dal tuo ordine ${ordine[indice].nome}`, "toast-rimozione");
 
     ordine[indice].quantita--;
     costo -= ordine[indice].prezzo;
-    if(ordine[indice].quantita == 0){
-        ordine.splice(indice,1);
+    if (ordine[indice].quantita == 0) {
+        ordine.splice(indice, 1);
     }
     caricaPaginaPagamento();
-} 
+}
 
-window.caricaPaginaPagamento = function (){
+window.caricaPaginaPagamento = function () {
     const container = document.getElementById("contenuto");
 
     container.classList.remove("home-banner");
@@ -54,8 +54,8 @@ window.caricaPaginaPagamento = function (){
     if (ordine.length === 0) {
         listaProdottiHTML = "<p style='text-align:center;'>Il tuo carrello è vuoto</p>";
     }
-    else{
-        for(let i=0;i<ordine.length;i++){
+    else {
+        for (let i = 0; i < ordine.length; i++) {
 
             listaProdottiHTML += `
                 <div class="item-carrello">
@@ -93,22 +93,22 @@ window.caricaPaginaPagamento = function (){
         </div>
     `;
 
-    if(ordine.length == 0){
+    if (ordine.length == 0) {
         document.getElementById("btnPagamento").disabled = true;
     }
 
 }
 
-window.mandaPagamento = function(){
+window.mandaPagamento = function () {
     if (client.connected) {
         const pacchettoDati = {
             id: matrix_id,
             prodotti: ordine,
             prezzo: costo,
         };
-        
-        client.publish("Ordini",JSON.stringify(pacchettoDati));
-        
+
+        client.publish("Ordini", JSON.stringify(pacchettoDati));
+
         //Notifica quando abbiamo mandato il nostro ordine
         const container = document.getElementById("toast-container");
         const toast = document.createElement("div");
@@ -116,7 +116,7 @@ window.mandaPagamento = function(){
         toast.innerHTML = `Abbiamo mandato il tuo ordine numero : ${matrix_id}`;
         toast.id = `toast-ordine-${matrix_id}`;
         container.appendChild(toast);
-            
+
         //Reset 
         matrix_id++;
         ordine = [];
@@ -127,11 +127,11 @@ window.mandaPagamento = function(){
         document.getElementById("contenuto").innerHTML = `<h1>Grazie per aver ordinato</h1>`;
     }
     else {
-        creaToast("Non sei ancora connesso al broker!","toast-error");
+        creaToast("Non sei ancora connesso al broker!", "toast-error");
     }
 }
 
-window.ordineRicevuto = function(){
+window.ordineRicevuto = function () {
     client.removeAllListeners("message");
     client.on("message", (topic, message) => {
         if (topic === "Finito") {
@@ -139,22 +139,22 @@ window.ordineRicevuto = function(){
             if (msg && msg.id) {
                 const toast = document.getElementById(`toast-ordine-${msg.id}`);
 
-                toast.innerHTML=`
+                toast.innerHTML = `
                 <div>
                     L'ordine ${msg.id} è pronto per il ritiro 
                     <button class ="toast-button" onclick=ritiraOrdine(${msg.id})>Ritira Ordine</button>
                 </div>`;
+            }
         }
-    }
     });
 }
 
-window.ritiraOrdine = function(id){
-    console.log(id);
+window.ritiraOrdine = function (id) {
     const toast = document.getElementById(`toast-ordine-${id}`);
     toast.remove();
     const dati = { id: id };
-    client.publish("Ritirato",JSON.stringify(dati));
+    client.publish("Ritirato", JSON.stringify(dati));
+    creaToast("L'ordine è stato ritirato buon appetito", "toast-ritiro");
 }
 
 
@@ -162,10 +162,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     client.on('connect', (event) => {
         console.log("Publisher connesso al Broker!");
         client.subscribe("Finito");
-        }
+    }
     );
 
-    document.getElementById("mostraMenu").addEventListener('click',(event)=>{
+    document.getElementById("mostraMenu").addEventListener('click', (event) => {
         event.preventDefault();
         const container = document.getElementById("contenuto");
 
@@ -248,13 +248,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
                 </div>
             </div>`;
-});
+    });
 
-    
+
 
     document.getElementById("mostraPagamento").addEventListener('click', (event) => {
         event.preventDefault();
         caricaPaginaPagamento();
-        
-    }); 
+
+    });
 });
