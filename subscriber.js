@@ -4,32 +4,45 @@ let lista_prep = [];
 let lista_finito = [];
 let tempo_random = generaTempoRandomico();
 
+// Logica Pubblicità
+const ads = ["images/promo.png", "images/promo2.png", "images/promo3.png"];
+let adIndex = 0;
+
+function cambiaPubblicita() {
+    const banner = document.getElementById("banner-ad");
+    if (banner) {
+        adIndex = (adIndex + 1) % ads.length;
+        banner.src = ads[adIndex];
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     client.on('connect', () => console.log("Subscriber connesso al Broker!"));
     client.subscribe("Ordini");
     client.subscribe("Ritirato");
     
-    //Ricezione messaggi
+    // Rotazione automatica ogni 10 secondi
+    setInterval(cambiaPubblicita, 10000);
+    
     client.on('message', (topic, message) => {
         const msg = JSON.parse(message.toString());
+        
         if(topic == "Ordini"){
             lista_prep.push(msg);
             renderLists();
-            // Cambio dei procesi da una lista all altra
+            
             setTimeout(() => {
                 if(lista_prep.length > 0) {
-                    console.log(tempo_random);
                     lista_finito.push(lista_prep.shift());
                     renderLists();
                     mandaOrdineFinito();
+                    cambiaPubblicita(); // Cambia adv quando l'ordine è pronto
                     tempo_random = generaTempoRandomico();
                 }
-            },tempo_random);
+            }, tempo_random);
         }
-
         else if(topic == "Ritirato"){
             let index = lista_finito.findIndex(ordine => ordine.id == msg.id);
-            console.log(index);
             if (index !== -1) {
                 lista_finito.splice(index, 1);
                 renderLists();
@@ -38,49 +51,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
 function mandaOrdineFinito(){
     let str = JSON.stringify(lista_finito[lista_finito.length - 1]);
-    console.log("Sto mandando l'ordine finito");
     client.publish("Finito", str);
 }
 
-//Carica le 2 liste in preparazione e processo finito . 
 function renderLists() {
-    const sectionPrep = document.getElementById("listaPrep");
-    const sectionFinito = document.getElementById("listaFinito");
-
-    let str_prep = creaContenuto(lista_prep);
-    let str_finito = creaContenuto(lista_finito);
-    
-    
-    sectionPrep.innerHTML = str_prep;
-
-    sectionFinito.innerHTML = str_finito;
+    document.getElementById("listaPrep").innerHTML = creaContenuto(lista_prep);
+    document.getElementById("listaFinito").innerHTML = creaContenuto(lista_finito);
 }
 
 function creaContenuto(lista){
-    let str="";
-    for(let i=0; i<lista.length; i++){
-        str += `<div class="ordine-box">`;
-        str += `<h3>Ordine numero: ${lista[i].id}</h3>`;
-        
-        
-        str += "<p>Prodotti: ";
-        for (let j = 0; j < lista[i].prodotti.length; j++) {
-            str += lista[i].prodotti[j].quantita+" X ";
-            str += lista[i].prodotti[j].nome;
-
-            if (j < lista[i].prodotti.length - 1) {
-                str += ", ";
-            }
-        }
-        str += "</p>";
-
-        
-        str += `</div>`;
-    }
-    return str;
+    return lista.map(item => `
+        <div class="ordine-box">
+            <h3>Ordine numero: ${item.id}</h3>
+            <p>Prodotti: ${item.prodotti.map(p => p.quantita + " X " + p.nome).join(", ")}</p>
+        </div>
+    `).join('');
 }
 
 function generaTempoRandomico(){
