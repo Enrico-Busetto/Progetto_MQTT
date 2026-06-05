@@ -141,3 +141,32 @@ body{
     color:#333;
     line-height:1.4;
 }
+
+.ordine-box {
+    border: 2px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+    transition: background-color 0.5s ease;
+}
+
+.ordine-box.ritardo {
+    background-color: #ffcccc;
+    border-color: #ff0000;
+}
+
+.ordine-box.ritardo h3 {
+    color: #b30000;
+}
+
+.timer-live b {
+    color: #333;
+}
+
+.ritardo .timer-live b {
+    color: red;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0.5; }
+}
