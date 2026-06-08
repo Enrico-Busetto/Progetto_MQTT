@@ -268,8 +268,13 @@ window.mandaPagamento = async function () {
         simboloValuta = "€";
 
         ordineRicevuto();
-
-        document.getElementById("contenuto").innerHTML = `<h1>Grazie per aver ordinato</h1>`;
+        let divContenuto = document.getElementById("contenuto");
+        divContenuto.classList.add("home-banner");
+        
+        divContenuto.innerHTML = `<h1>Grazie per aver ordinato</h1>`;
+        setTimeout(()=>{
+            divContenuto.innerHTML = `<img src="images/pubblicita.png">`;
+        },2000);
     }
     else {
         creaToast("Non sei ancora connesso al broker!", "toast-error");
