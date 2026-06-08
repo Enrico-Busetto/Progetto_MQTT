@@ -285,6 +285,40 @@ button:disabled:hover{
 .tooltip-wrapper:has(button:disabled):hover::after{
     opacity:1;
 }
+.cambio-valuta{
+    display:flex;
+    gap:10px;
+    margin-top:20px;
+    margin-bottom:10px;
+}
+
+.btn-valuta{
+    flex:1;
+    padding:12px;
+    font-size:0.95rem;
+    border-radius:10px;
+    background:#FDFBF7;
+    color:#4A3728;
+    border:2px solid #CC5500;
+    cursor:pointer;
+}
+
+.btn-valuta:hover{
+    background:#f3e7d8;
+}
+
+.btn-valuta.valuta-attiva{
+    background:#CC5500;
+    color:#fff;
+}
+
+.info-valuta{
+    text-align:center;
+    margin-top:8px;
+    font-size:0.9rem;
+    color:#2D4F31;
+    font-weight:600;
+}
 
 @keyframes scivolaDentro{
     from{
