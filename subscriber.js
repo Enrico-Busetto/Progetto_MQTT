@@ -1,4 +1,4 @@
-const client = mqtt.connect('ws://127.0.0.1:9001/mqtt');
+const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
 
 let lista_prep = [];
 let lista_finito = [];
