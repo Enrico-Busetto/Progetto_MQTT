@@ -15,7 +15,7 @@ client.on('message', (topic, message) => {
             ordine.orarioInizio = Date.now();
         }
 
-        let tempoRandom = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
+        let tempoRandom = Math.floor(Math.random() * (20000 - 1000 + 1)) + 1000;
         console.log(`L'ordine ${ordine.id} sarà pronto tra ${tempoRandom / 1000} secondi.`);
 
         setTimeout(() => {
