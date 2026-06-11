@@ -2,7 +2,7 @@ const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
 
 let ordine = [];
 let costo = 0;
-let matrix_id = Math.floor(Math.random() * 900) + 100;
+let matrix_id = Math.floor(Math.random() * 999) + 100;
 
 let valutaSelezionata = "EUR";
 let prezzoConvertito = 0;
